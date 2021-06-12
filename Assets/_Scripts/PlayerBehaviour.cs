@@ -6,20 +6,27 @@ public class PlayerBehaviour : MonoBehaviour
 {
     //public float movementForce, jumpForce;
     //public Rigidbody rigidBody;
-    public CharacterController controller;
-    public bool isGrounded;
-    public float groundRadius = 0.5f;
+    public CharacterController controller;    
+
+    [Header("Control Properties")]
     public float maxSpeed = 10.0f;
     public float gravity = -30.0f;
     public float jumpHeight = 3.0f;
+    public Vector3 velocity;
+
+    [Header("Ground Detection Properties")]
     public Transform groundCheck;
     public LayerMask groundMask;
-    public Vector3 velocity;
+    public float groundRadius = 0.5f;  
+    public bool isGrounded;
+
+    [Header("MiniMap")]
+    public GameObject miniMap;
 
     // Start is called before the first frame update
     void Start()
     {
-        controller = GetComponent<CharacterController>();
+        controller = GetComponent<CharacterController>(); 
         //rigidBody = GetComponent<Rigidbody>();
     }
 
@@ -48,6 +55,11 @@ public class PlayerBehaviour : MonoBehaviour
         velocity.y += gravity * Time.deltaTime;
 
         controller.Move(velocity * Time.deltaTime);
+
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            miniMap.SetActive(!miniMap.activeInHierarchy);
+        }
 
         //if (isGrounded)
         //{
